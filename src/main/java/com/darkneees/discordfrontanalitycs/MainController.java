@@ -20,9 +20,13 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import org.yaml.snakeyaml.Yaml;
 
+import java.io.InputStream;
 import java.lang.reflect.Type;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.CompletableFuture;
@@ -62,11 +66,15 @@ public class MainController {
     private ComboBox comboGuilds;
     private final ExecutorService service = Executors.newSingleThreadExecutor();
 
+    private String host;
+
 
     @FXML
     public void initialize() {
+
         comboGuilds.setItems(guildsObs);
         BoxAvatar.setVisible(false);
+        loadConfiguration();
 
         TimerTask timerTask = new TimerTask() {
             @Override
@@ -94,7 +102,7 @@ public class MainController {
             Task<Void> loadingTask = CreateTaskLoading();
             service.execute(loadingTask);
             CompletableFuture<?> member = CompletableFuture.supplyAsync(
-                            (new GetDataSupplier("http://localhost:8080/guild/" + guild.getId() + "/bestmember")))
+                            (new GetDataSupplier(host + "/guild/" + guild.getId() + "/bestmember")))
                     .whenComplete((input, exception) -> {
                         if(exception == null) {
                             UserEntity user = new Gson().fromJson(input, UserEntity.class);
@@ -107,7 +115,7 @@ public class MainController {
                     });
 
             CompletableFuture<?> channel = CompletableFuture.supplyAsync(
-                            (new GetDataSupplier("http://localhost:8080/guild/" + guild.getId() + "/bestchannel")))
+                            (new GetDataSupplier(host + "/guild/" + guild.getId() + "/bestchannel")))
                     .whenComplete((input, exception) -> {
                         if(exception == null) {
                         GuildEntity channelEntity = new Gson().fromJson(input, GuildEntity.class);
@@ -119,7 +127,7 @@ public class MainController {
                     });
 
             CompletableFuture<?> message = CompletableFuture.supplyAsync(
-                            (new GetDataSupplier("http://localhost:8080/guild/" + guild.getId() + "/messagesinhour")))
+                            (new GetDataSupplier(host + "/guild/" + guild.getId() + "/messagesinhour")))
                     .whenComplete((input, exception) -> {
                         if(exception == null) {
                             String result = "No messages have been written on the server for an hour.";
@@ -144,7 +152,7 @@ public class MainController {
         refreshInfoButton.setDisable(true);
         Task<Void> loadingTask = CreateTaskLoading();
         CompletableFuture<?> task = CompletableFuture.supplyAsync(
-                (new GetDataSupplier("http://localhost:8080/guilds"))
+                (new GetDataSupplier(host + "/guilds"))
         ).whenComplete((input, exception) -> {
             Type guildsType = new TypeToken<ArrayList<GuildEntity>>() {
             }.getType();
@@ -186,5 +194,12 @@ public class MainController {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setContentText(exception);
         alert.showAndWait();
+    }
+
+    private void loadConfiguration(){
+        Yaml yaml = new Yaml();
+        InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("application.yml");
+        Map<String, Object> config = yaml.load(inputStream);
+        host = (String) config.get("host");
     }
 }
