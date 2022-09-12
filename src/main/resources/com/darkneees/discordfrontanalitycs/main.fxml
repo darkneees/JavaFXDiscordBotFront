@@ -23,7 +23,7 @@
                <Insets left="20.0" />
             </HBox.margin>
          </ComboBox>
-         <Button mnemonicParsing="false" onAction="#refreshGuilds" prefHeight="60.0" prefWidth="60.0">
+         <Button fx:id="refreshGuildsButton" mnemonicParsing="false" onAction="#refreshGuilds" prefHeight="60.0" prefWidth="60.0">
             <styleClass>
                <String fx:value="refresh-button" />
                <String fx:value="refresh-list" />
@@ -49,7 +49,7 @@
                <Font size="20.0" />
             </font>
          </CheckBox>
-         <Button mnemonicParsing="false" onAction="#refreshInfo" prefHeight="40.0" prefWidth="200.0" styleClass="refresh-button" text="Refresh" textFill="WHITE">
+         <Button fx:id="refreshInfoButton" mnemonicParsing="false" onAction="#refreshInfo" prefHeight="40.0" prefWidth="200.0" styleClass="refresh-button" text="Refresh" textFill="WHITE">
             <font>
                <Font size="20.0" />
             </font>

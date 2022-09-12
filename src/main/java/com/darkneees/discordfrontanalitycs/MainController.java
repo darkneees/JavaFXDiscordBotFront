@@ -14,10 +14,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -34,6 +31,10 @@ import java.util.concurrent.Executors;
 
 public class MainController {
 
+    @FXML
+    private Button refreshGuildsButton;
+    @FXML
+    private Button refreshInfoButton;
     @FXML
     private CheckBox runTimer;
     @FXML
@@ -70,7 +71,8 @@ public class MainController {
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                if(runTimer.isSelected()) Platform.runLater(() -> UpdateGuildInfo());
+                if(runTimer.isSelected() && comboGuilds.getValue() != null)
+                    Platform.runLater(() -> UpdateGuildInfo());
             }
         };
         Timer timer = new Timer("timer");
@@ -86,9 +88,9 @@ public class MainController {
     }
 
     private void UpdateGuildInfo() {
-
         GuildEntity guild = (GuildEntity) comboGuilds.getValue();
         if(guild != null) {
+            refreshGuildsButton.setDisable(true);
             Task<Void> loadingTask = CreateTaskLoading();
             service.execute(loadingTask);
             CompletableFuture<?> member = CompletableFuture.supplyAsync(
@@ -131,6 +133,7 @@ public class MainController {
             CompletableFuture<Void> all = CompletableFuture.allOf(member, channel, message);
             all.whenComplete((input, exception) -> Platform.runLater(() ->  {
                 FreeTaskLoading(loadingTask);
+                refreshGuildsButton.setDisable(false);
                 if(exception != null) WindowException(exception.getMessage());
                 else BoxAvatar.setVisible(true);
             }));
@@ -138,6 +141,7 @@ public class MainController {
     }
 
     private void UpdateListGuilds() {
+        refreshInfoButton.setDisable(true);
         Task<Void> loadingTask = CreateTaskLoading();
         CompletableFuture<?> task = CompletableFuture.supplyAsync(
                 (new GetDataSupplier("http://localhost:8080/guilds"))
@@ -148,6 +152,7 @@ public class MainController {
             Platform.runLater(() -> {
                 guildsObs.clear();
                 guildsObs.addAll(guilds);
+                refreshInfoButton.setDisable(false);
             });
         });
 
