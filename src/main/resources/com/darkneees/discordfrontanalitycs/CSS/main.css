@@ -1,0 +1,31 @@
+.check-box > .box {
+    -fx-padding: 10px;
+}
+
+.check-box > .box > .mark {
+    -fx-padding: 10px;
+}
+
+.choose-guild {
+    -fx-font-size: 20px;
+}
+
+.refresh-button {
+    -fx-background-color: #338333;
+    -fx-background-radius: 15;
+}
+
+.refresh-list {
+    -fx-background-color: transparent;
+    -fx-background-image: url("../images/refresh-button.png");
+}
+
+.refresh-list:hover {
+    -fx-background-color: #676464;
+}
+
+.vbox-center {
+    -fx-background-color: #262525;
+    -fx-border-color: gray;
+    -fx-border-width: 2 0 0 0;
+}

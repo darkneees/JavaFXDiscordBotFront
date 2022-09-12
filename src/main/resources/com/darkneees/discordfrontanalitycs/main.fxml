@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #36393F;" stylesheets="@CSS/main.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.darkneees.discordfrontanalitycs.MainController">
+   <top>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <ComboBox fx:id="comboGuilds" prefHeight="40.0" prefWidth="450.0" promptText="Choose guild..." styleClass="choose-guild">
+            <items>
+            </items>
+            <HBox.margin>
+               <Insets left="20.0" />
+            </HBox.margin>
+         </ComboBox>
+         <Button mnemonicParsing="false" onAction="#refreshGuilds" prefHeight="60.0" prefWidth="60.0">
+            <styleClass>
+               <String fx:value="refresh-button" />
+               <String fx:value="refresh-list" />
+            </styleClass>
+            <HBox.margin>
+               <Insets left="20.0" />
+            </HBox.margin>
+         </Button>
+         <Label fx:id="loadingProgress" textFill="WHITE">
+            <HBox.margin>
+               <Insets left="60.0" />
+            </HBox.margin>
+            <font>
+               <Font size="24.0" />
+            </font>
+         </Label>
+         <Region HBox.hgrow="ALWAYS" />
+         <CheckBox fx:id="runTimer" mnemonicParsing="false" text="Auto update" textFill="WHITE">
+            <HBox.margin>
+               <Insets right="20.0" />
+            </HBox.margin>
+            <font>
+               <Font size="20.0" />
+            </font>
+         </CheckBox>
+         <Button mnemonicParsing="false" onAction="#refreshInfo" prefHeight="40.0" prefWidth="200.0" styleClass="refresh-button" text="Refresh" textFill="WHITE">
+            <font>
+               <Font size="20.0" />
+            </font>
+            <HBox.margin>
+               <Insets right="20.0" />
+            </HBox.margin>
+         </Button>
+      </HBox>
+   </top>
+   <center>
+         <VBox fx:id="BoxAvatar" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="vbox-center" HBox.hgrow="ALWAYS">
+            <Label text="Best user" textFill="WHITE" VBox.vgrow="ALWAYS">
+               <font>
+                  <Font size="36.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Label>
+            <Circle fx:id="avatar" fill="#ffffff00" radius="125.0" stroke="BLACK" strokeType="INSIDE">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Circle>
+            <Label fx:id="name" textFill="WHITE">
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="id" textFill="WHITE">
+               <font>
+                  <Font size="24.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Label>
+            <Button mnemonicParsing="false" onAction="#goLink" prefHeight="40.0" prefWidth="300.0" styleClass="refresh-button" text="Open user in browser" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Label text="Best channel" textFill="WHITE">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            <VBox.margin>
+               <Insets top="10.0" />
+            </VBox.margin>
+            </Label>
+         <Label fx:id="nameChannel" textFill="WHITE">
+            <font>
+               <Font size="24.0" />
+            </font>
+         </Label>
+         <Label fx:id="idChannel" textFill="WHITE">
+            <font>
+               <Font size="24.0" />
+            </font>
+            <VBox.margin>
+               <Insets top="10.0" />
+            </VBox.margin>
+         </Label>
+         <Label fx:id="messageInHour" textFill="WHITE">
+            <font>
+               <Font size="24.0" />
+            </font>
+         </Label>
+         </VBox>
+   </center>
+</BorderPane>
