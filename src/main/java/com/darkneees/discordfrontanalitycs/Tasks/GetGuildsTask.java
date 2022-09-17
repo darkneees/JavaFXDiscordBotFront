@@ -15,7 +15,7 @@ import java.util.function.Supplier;
 
 public class GetGuildsTask extends Task<ObservableList<GuildEntity>> {
 
-    private Supplier<HttpResponse<String>> getDataFromUrl;
+    private Supplier<CompletableFuture<HttpResponse<String>>> getDataFromUrl;
     public GetGuildsTask(String url) {
         this.getDataFromUrl = new GetDataSupplier(url);
     }
@@ -26,10 +26,10 @@ public class GetGuildsTask extends Task<ObservableList<GuildEntity>> {
         Type guildsType = new TypeToken<List<GuildEntity>>() {}.getType();
         ObservableList<GuildEntity> items = FXCollections.observableArrayList();
 
-        CompletableFuture.supplyAsync(getDataFromUrl).thenAccept((request) -> {
+        getDataFromUrl.get().thenAccept((request) -> {
             List<GuildEntity> guildEntities = new Gson().fromJson(request.body(), guildsType);
             items.addAll(guildEntities);
-        });
+        }).join();
 
         return items;
     }

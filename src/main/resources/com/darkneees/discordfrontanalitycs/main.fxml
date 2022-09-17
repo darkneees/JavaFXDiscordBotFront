@@ -23,7 +23,7 @@
                <Insets left="20.0" />
             </HBox.margin>
          </ComboBox>
-         <Button fx:id="refreshGuildsButton" mnemonicParsing="false" onAction="#refreshGuilds" prefHeight="60.0" prefWidth="60.0">
+         <Button mnemonicParsing="false" onAction="#refreshGuilds" prefHeight="60.0" prefWidth="60.0">
             <styleClass>
                <String fx:value="refresh-button" />
                <String fx:value="refresh-list" />
@@ -49,7 +49,7 @@
                <Font size="20.0" />
             </font>
          </CheckBox>
-         <Button fx:id="refreshInfoButton" mnemonicParsing="false" onAction="#refreshInfo" prefHeight="40.0" prefWidth="200.0" styleClass="refresh-button" text="Refresh" textFill="WHITE">
+         <Button mnemonicParsing="false" onAction="#refreshInfo" prefHeight="40.0" prefWidth="200.0" styleClass="refresh-button" text="Refresh" textFill="WHITE">
             <font>
                <Font size="20.0" />
             </font>
@@ -74,7 +74,7 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Circle>
-            <Label fx:id="name" textFill="WHITE">
+            <Label fx:id="bestUserName" textFill="WHITE">
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>
@@ -82,7 +82,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <Label fx:id="id" textFill="WHITE">
+            <Label fx:id="bestUserId" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
@@ -103,12 +103,12 @@
                <Insets top="10.0" />
             </VBox.margin>
             </Label>
-         <Label fx:id="nameChannel" textFill="WHITE">
+         <Label fx:id="bestChannelName" textFill="WHITE">
             <font>
                <Font size="24.0" />
             </font>
          </Label>
-         <Label fx:id="idChannel" textFill="WHITE">
+         <Label fx:id="bestChannelId" textFill="WHITE">
             <font>
                <Font size="24.0" />
             </font>
