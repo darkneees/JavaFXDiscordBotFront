@@ -14,7 +14,7 @@ public class MainApplication extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 1280, 800);
         MainController mainController = fxmlLoader.getController();
         mainController.setHostServices(getHostServices());
-        stage.setTitle("Hello!");
+        stage.setTitle("Discord darkneees bot app");
         stage.setScene(scene);
         stage.show();
     }

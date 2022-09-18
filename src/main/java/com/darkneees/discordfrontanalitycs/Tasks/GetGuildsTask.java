@@ -27,8 +27,11 @@ public class GetGuildsTask extends Task<ObservableList<GuildEntity>> {
         ObservableList<GuildEntity> items = FXCollections.observableArrayList();
 
         getDataFromUrl.get().thenAccept((request) -> {
-            List<GuildEntity> guildEntities = new Gson().fromJson(request.body(), guildsType);
-            items.addAll(guildEntities);
+            if(request.statusCode() == 500) throw new RuntimeException();
+            else {
+                List<GuildEntity> guildEntities = new Gson().fromJson(request.body(), guildsType);
+                items.addAll(guildEntities);
+            }
         }).join();
 
         return items;

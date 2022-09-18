@@ -20,7 +20,10 @@ public class GetBestChannelTask extends Task<ChannelEntity> {
     @Override
     protected ChannelEntity call() {
         AtomicReference<ChannelEntity> entity = new AtomicReference<>();
-        getDataFromUrl.get().thenAccept((input) -> entity.set(new Gson().fromJson(input.body(), ChannelEntity.class))).join();
+        getDataFromUrl.get().thenAccept((input) -> {
+            if(input.statusCode() == 500) throw new RuntimeException();
+            else entity.set(new Gson().fromJson(input.body(), ChannelEntity.class));
+        }).join();
         return entity.get();
     }
 }

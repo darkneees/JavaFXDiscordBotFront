@@ -20,7 +20,11 @@ public class GetBestMemberTask extends Task<UserEntity> {
     @Override
     protected UserEntity call() {
         AtomicReference<UserEntity> entity = new AtomicReference<>();
-        getDataFromUrl.get().thenAccept((input) -> entity.set(new Gson().fromJson(input.body(), UserEntity.class))).join();
+        getDataFromUrl.get().thenAccept((input) ->  {
+            if(input.statusCode() == 500) throw new RuntimeException();
+            else entity.set(new Gson().fromJson(input.body(), UserEntity.class));
+
+        }).join();
         return entity.get();
     }
 }

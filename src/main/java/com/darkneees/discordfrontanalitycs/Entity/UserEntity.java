@@ -5,9 +5,6 @@ public class UserEntity {
     private String id;
     private String name;
     private String avatar;
-    public UserEntity() {
-    }
-
     public UserEntity(String id, String name, String avatar) {
         this.id = id;
         this.name = name;
