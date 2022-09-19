@@ -6,6 +6,7 @@ import javafx.concurrent.Task;
 
 import java.net.http.HttpResponse;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
 
@@ -20,7 +21,8 @@ public class GetBestChannelTask extends Task<ChannelEntity> {
     @Override
     protected ChannelEntity call() {
         AtomicReference<ChannelEntity> entity = new AtomicReference<>();
-        getDataFromUrl.get().thenAccept((input) -> {
+        getDataFromUrl.get()
+                .thenAccept((input) -> {
             if(input.statusCode() == 500) throw new RuntimeException();
             else entity.set(new Gson().fromJson(input.body(), ChannelEntity.class));
         }).join();

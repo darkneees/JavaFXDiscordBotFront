@@ -11,6 +11,7 @@ import java.lang.reflect.Type;
 import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
 public class GetGuildsTask extends Task<ObservableList<GuildEntity>> {
@@ -26,7 +27,8 @@ public class GetGuildsTask extends Task<ObservableList<GuildEntity>> {
         Type guildsType = new TypeToken<List<GuildEntity>>() {}.getType();
         ObservableList<GuildEntity> items = FXCollections.observableArrayList();
 
-        getDataFromUrl.get().thenAccept((request) -> {
+        getDataFromUrl.get()
+                .thenAccept((request) -> {
             if(request.statusCode() == 500) throw new RuntimeException();
             else {
                 List<GuildEntity> guildEntities = new Gson().fromJson(request.body(), guildsType);

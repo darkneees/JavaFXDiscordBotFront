@@ -86,6 +86,7 @@ public class MainController {
             Task<Void> UpdateInfo = new Task<>() {
                 @Override
                 protected Void call() {
+                    BoxAvatar.setVisible(false);
                     UpdateBestMember(entity.getId());
                     UpdateBestChannel(entity.getId());
                     UpdateMessageInHour(entity.getId());

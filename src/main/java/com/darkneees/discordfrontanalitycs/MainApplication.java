@@ -1,6 +1,7 @@
 package com.darkneees.discordfrontanalitycs;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -16,6 +17,7 @@ public class MainApplication extends Application {
         mainController.setHostServices(getHostServices());
         stage.setTitle("Discord darkneees bot app");
         stage.setScene(scene);
+        stage.setOnCloseRequest(e -> Platform.exit());
         stage.show();
     }
 
