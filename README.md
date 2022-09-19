@@ -2,7 +2,7 @@
 
 ## Графическое приложение, которое шлёт запросы на REST-cервис и отображает полученный результат.
 
-Ссылка на github REST-сервиса: [Click](https://github.com/darkneees/SpringDiscordBotBack)
+Ссылка на github REST-сервиса: [Click](https://github.com/darkneees/BackendBot)
 
 Графические интерфейс:
 
