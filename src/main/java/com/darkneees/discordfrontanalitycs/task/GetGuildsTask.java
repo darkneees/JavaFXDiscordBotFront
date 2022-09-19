@@ -1,6 +1,6 @@
-package com.darkneees.discordfrontanalitycs.Tasks;
+package com.darkneees.discordfrontanalitycs.task;
 
-import com.darkneees.discordfrontanalitycs.Entity.GuildEntity;
+import com.darkneees.discordfrontanalitycs.entity.GuildEntity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import javafx.collections.FXCollections;
@@ -11,14 +11,13 @@ import java.lang.reflect.Type;
 import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
 public class GetGuildsTask extends Task<ObservableList<GuildEntity>> {
 
     private Supplier<CompletableFuture<HttpResponse<String>>> getDataFromUrl;
     public GetGuildsTask(String url) {
-        this.getDataFromUrl = new GetDataSupplier(url);
+        this.getDataFromUrl = new SendRequestSupplier(url);
     }
 
     @Override

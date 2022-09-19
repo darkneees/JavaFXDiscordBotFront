@@ -1,7 +1,5 @@
-package com.darkneees.discordfrontanalitycs.Tasks;
+package com.darkneees.discordfrontanalitycs.task;
 
-import com.darkneees.discordfrontanalitycs.Entity.ChannelEntity;
-import com.google.gson.Gson;
 import com.google.gson.JsonParser;
 import javafx.concurrent.Task;
 
@@ -15,7 +13,7 @@ public class GetMessageInHourTask extends Task<String> {
     private Supplier<CompletableFuture<HttpResponse<String>>> getDataFromUrl;
 
     public GetMessageInHourTask(String url) {
-        this.getDataFromUrl = new GetDataSupplier(url);
+        this.getDataFromUrl = new SendRequestSupplier(url);
     }
 
     @Override

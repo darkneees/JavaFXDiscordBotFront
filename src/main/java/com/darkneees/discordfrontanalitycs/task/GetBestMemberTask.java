@@ -1,6 +1,6 @@
-package com.darkneees.discordfrontanalitycs.Tasks;
+package com.darkneees.discordfrontanalitycs.task;
 
-import com.darkneees.discordfrontanalitycs.Entity.UserEntity;
+import com.darkneees.discordfrontanalitycs.entity.UserEntity;
 import com.google.gson.Gson;
 import javafx.concurrent.Task;
 
@@ -14,7 +14,7 @@ public class GetBestMemberTask extends Task<UserEntity> {
     private Supplier<CompletableFuture<HttpResponse<String>>> getDataFromUrl;
 
     public GetBestMemberTask(String url) {
-        this.getDataFromUrl = new GetDataSupplier(url);
+        this.getDataFromUrl = new SendRequestSupplier(url);
     }
 
     @Override

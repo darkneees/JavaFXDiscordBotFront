@@ -1,13 +1,13 @@
 package com.darkneees.discordfrontanalitycs;
 
 
-import com.darkneees.discordfrontanalitycs.Entity.ChannelEntity;
-import com.darkneees.discordfrontanalitycs.Entity.GuildEntity;
-import com.darkneees.discordfrontanalitycs.Entity.UserEntity;
-import com.darkneees.discordfrontanalitycs.Tasks.GetBestChannelTask;
-import com.darkneees.discordfrontanalitycs.Tasks.GetBestMemberTask;
-import com.darkneees.discordfrontanalitycs.Tasks.GetGuildsTask;
-import com.darkneees.discordfrontanalitycs.Tasks.GetMessageInHourTask;
+import com.darkneees.discordfrontanalitycs.entity.ChannelEntity;
+import com.darkneees.discordfrontanalitycs.entity.GuildEntity;
+import com.darkneees.discordfrontanalitycs.entity.UserEntity;
+import com.darkneees.discordfrontanalitycs.task.GetBestChannelTask;
+import com.darkneees.discordfrontanalitycs.task.GetBestMemberTask;
+import com.darkneees.discordfrontanalitycs.task.GetGuildsTask;
+import com.darkneees.discordfrontanalitycs.task.GetMessageInHourTask;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -82,43 +82,43 @@ public class MainController {
     public void refreshInfo() {
         GuildEntity entity = (GuildEntity) comboGuilds.getValue();
         if(entity != null) {
-            Timeline line = StartLoadingService();
+            Timeline line = startLoadingService();
             Task<Void> UpdateInfo = new Task<>() {
                 @Override
                 protected Void call() {
                     BoxAvatar.setVisible(false);
-                    UpdateBestMember(entity.getId());
-                    UpdateBestChannel(entity.getId());
-                    UpdateMessageInHour(entity.getId());
+                    updateBestMember(entity.getId());
+                    updateBestChannel(entity.getId());
+                    updateMessageInHour(entity.getId());
 
                     return null;
                 }
             };
-            UpdateInfo.setOnSucceeded((e) -> SuccessLoadingService(line));
+            UpdateInfo.setOnSucceeded((e) -> successLoadingService(line));
             service.execute(UpdateInfo);
-        } else WindowException("Dont' find this guild", "Guilds");
+        } else showWindowException("Dont' find this guild", "Guilds");
     }
 
-    public void refreshGuilds() {
+    public void refreshListGuilds() {
         Task<ObservableList<GuildEntity>> task = new GetGuildsTask(host + "/guilds");
         comboGuilds.itemsProperty().bind(task.valueProperty());
-        Timeline line = StartLoadingService();
+        Timeline line = startLoadingService();
         service.execute(task);
         task.setOnSucceeded((element) -> {
             comboGuilds.itemsProperty().unbind();
-            SuccessLoadingService(line);
+            successLoadingService(line);
         });
         task.setOnFailed((element -> {
 
         }));
     }
 
-    public void goLink() {
+    public void openUserLink() {
         GuildEntity guild = (GuildEntity) comboGuilds.getValue();
         hostServices.showDocument("https://discord.com/users/" + guild.getId());
     }
 
-    private void UpdateBestMember(String id) {
+    private void updateBestMember(String id) {
         StringBuilder sb = new StringBuilder(host).append("/guild/").append(id).append("/bestmember");
         Task<UserEntity> task = new GetBestMemberTask(sb.toString());
         task.setOnSucceeded(e -> {
@@ -128,11 +128,11 @@ public class MainController {
             avatar.setFill(new ImagePattern(new Image(user.getAvatar())));
             BoxAvatar.setVisible(true);
         });
-        task.setOnFailed(e -> WindowException("Don't find best user", "/bestmember"));
+        task.setOnFailed(e -> showWindowException("Don't find best user", "/bestmember"));
         service.execute(task);
     }
 
-    private void UpdateBestChannel(String id){
+    private void updateBestChannel(String id){
         StringBuilder sb = new StringBuilder(host).append("/guild/").append(id).append("/bestchannel");
         Task<ChannelEntity> task = new GetBestChannelTask(sb.toString());
         task.setOnSucceeded(e -> {
@@ -142,19 +142,19 @@ public class MainController {
             bestChannelName.setText("Channel name: " + entity.getName());
             BoxAvatar.setVisible(true);
         });
-        task.setOnFailed(e -> WindowException("Don't find best channel", "/bestchannel"));
+        task.setOnFailed(e -> showWindowException("Don't find best channel", "/bestchannel"));
         service.execute(task);
     }
 
-    private void UpdateMessageInHour(String id){
+    private void updateMessageInHour(String id){
         StringBuilder sb = new StringBuilder(host).append("/guild/").append(id).append("/messagesinhour");
         Task<String> task = new GetMessageInHourTask(sb.toString());
         task.setOnSucceeded(e -> messageInHour.setText("Count messages: " + task.getValue()));
-        task.setOnFailed(e -> WindowException("Don't find message in hour", "/messageinhour"));
+        task.setOnFailed(e -> showWindowException("Don't find message in hour", "/messageinhour"));
         service.execute(task);
     }
 
-    private Timeline StartLoadingService(){
+    private Timeline startLoadingService(){
         loadingProgress.setText("Loading");
         loadingProgress.setTextFill(Color.YELLOW);
         Timeline timeline = new Timeline(
@@ -169,13 +169,13 @@ public class MainController {
         return timeline;
     }
 
-    private void SuccessLoadingService(Timeline timeline) {
+    private void successLoadingService(Timeline timeline) {
         timeline.stop();
         loadingProgress.setTextFill(Color.GREEN);
         loadingProgress.setText("Loaded");
     }
 
-    public void WindowException(String exception, String title){
+    public void showWindowException(String exception, String title){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setHeaderText(title);
         alert.setContentText(exception);

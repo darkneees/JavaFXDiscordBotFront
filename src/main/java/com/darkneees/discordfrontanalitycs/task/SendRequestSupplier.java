@@ -1,4 +1,4 @@
-package com.darkneees.discordfrontanalitycs.Tasks;
+package com.darkneees.discordfrontanalitycs.task;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -8,11 +8,11 @@ import java.net.http.HttpResponse;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
-public class GetDataSupplier implements Supplier<CompletableFuture<HttpResponse<String>>> {
+public class SendRequestSupplier implements Supplier<CompletableFuture<HttpResponse<String>>> {
 
     private String urlString;
 
-    public GetDataSupplier(String urlString) {
+    public SendRequestSupplier(String urlString) {
         this.urlString = urlString;
     }
 

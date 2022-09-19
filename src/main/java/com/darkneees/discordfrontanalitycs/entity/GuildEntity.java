@@ -1,4 +1,4 @@
-package com.darkneees.discordfrontanalitycs.Entity;
+package com.darkneees.discordfrontanalitycs.entity;
 
 public class GuildEntity {
 

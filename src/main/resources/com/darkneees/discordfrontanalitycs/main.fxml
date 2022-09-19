@@ -23,7 +23,7 @@
                <Insets left="20.0" />
             </HBox.margin>
          </ComboBox>
-         <Button mnemonicParsing="false" onAction="#refreshGuilds" prefHeight="60.0" prefWidth="60.0">
+         <Button mnemonicParsing="false" onAction="#refreshListGuilds" prefHeight="60.0" prefWidth="60.0">
             <styleClass>
                <String fx:value="refresh-button" />
                <String fx:value="refresh-list" />
@@ -90,7 +90,7 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Label>
-            <Button mnemonicParsing="false" onAction="#goLink" prefHeight="40.0" prefWidth="300.0" styleClass="refresh-button" text="Open user in browser" textFill="WHITE">
+            <Button mnemonicParsing="false" onAction="#openUserLink" prefHeight="40.0" prefWidth="300.0" styleClass="refresh-button" text="Open user in browser" textFill="WHITE">
                <font>
                   <Font size="20.0" />
                </font>
